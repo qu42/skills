@@ -8,6 +8,7 @@ const ACTIONS = {
   CLEAR: 'clear',
   TOGGLE_SIGN: 'toggle_sign',
   PERCENT: 'percent',
+  SQRT: 'sqrt',
   DECIMAL: 'decimal',
 }
 
@@ -89,6 +90,12 @@ function reducer(state, action) {
       return { ...state, current: pct }
     }
 
+    case ACTIONS.SQRT: {
+      const n = parseFloat(state.current)
+      const result = n < 0 ? 'Error' : String(Math.sqrt(n))
+      return { ...state, current: result, waitingForOperand: true }
+    }
+
     case ACTIONS.CLEAR:
       return initialState
 
@@ -99,7 +106,7 @@ function reducer(state, action) {
 
 const BUTTONS = [
   { label: 'AC', action: { type: ACTIONS.CLEAR },        variant: 'function' },
-  { label: '+/-', action: { type: ACTIONS.TOGGLE_SIGN }, variant: 'function' },
+  { label: '√',   action: { type: ACTIONS.SQRT },        variant: 'function' },
   { label: '%',  action: { type: ACTIONS.PERCENT },      variant: 'function' },
   { label: '/',  action: { type: ACTIONS.OPERATOR, operator: '/' }, variant: 'operator' },
 
